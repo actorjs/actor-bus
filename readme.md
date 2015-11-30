@@ -1,81 +1,55 @@
-ActorJs Core
-============
+ActorJs Bus
+===========
 
 See Actor Model in Wikipedia.
+
+See ActorJs Core
 
 Description
 -----------
 
-ActorJs is a basic implementation of an actor model. The implementation is heavily based on the implementation of Akka. Most classes and methods are named the same.
-
-ActorJs works with nodejs as well in the browser. This makes that it easy integrates client and server.
+ActorJs Bus is a module wich implements a EventBus. The bus can be used to broadcast messages over the actor system. Actors can subscribe to the bus and listen on a particular message.
 
 Installation
 ------------
 Install it
 ```
-npm i actorjs-core
-
-```
-Use it
-```
-var actorjs = require('actor-core');
-
+npm i actorjs-bus
 ```
 
-Actors
----------------
-
-Actors are defined a functions. The actor only requires a single receive
-
+Use it nodejs
 ```
-var MyActor function () {
-    receive: receive(msg){
-        console.log(msg)
+var actorBus = require('actor-bus');
+```
+
+Use it web
+```
+var actorBus =  actorjs.bus
+```
+
+Subscribe to the bus
+```
+actorBus.EventBus.subscribe(function(message){
+    //Use message
+})
+```
+
+Publish to the bus
+```
+actorBus.EventBus.publish(message)
+```
+
+
+Use in combination with TypeMatchers and TypeMessage
+```
+var typeMatcher = actorBus.core.ActorMatchers.TypeMatcher;
+var typeMessage = actorBus.core.ActorMatchers.TypeMessage;
+
+actorBus.EventBus.subscribe(typeMatcher({
+    <typeName>: function (<Object>) {
+        //Do something
     }
-}
+})
 
-var system = new ActorSystem('MySystem');
-var ref = system.actorOf(MyActor);
-```
-
-Actors Messages
----------------
-Messages are helper classes to generate commands easyer there are different messages helpers to generat comands which are understood by the matchers.
-
-**Type Message**
-Type messages are understood by the type matcher. Type message can be used in the following way.
-
-```
-ActorMessages.TypeMessage(<String>, <Object>);
-```
-This produces the following message
-```
-{
-  type: <String>
-  data: <Object>
-}
-```
-
-Actors Matchers
----------------
-Matchers are introduced to be better able to match on incoming commands. There are different matchers which can be used.
-
-**Type Matcher**
-Type matcher assumes that the messages which are send have the following structure
-
-```
-{
-  type: <String>
-  data: <Object>
-}
-```
-Type Matcher can be used as follow
-
-```
-ActorMessages.TypeMessage({
-    <String>: function(<Object>){
-        // do something
-    }
-);
+actorBus.EventBus.publish(typeMessage(<typeName>, <Object>))
 ```
