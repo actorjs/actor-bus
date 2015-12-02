@@ -1,15 +1,15 @@
 var EventBus = function () {
 
-    this.callbacks = [];
+    this.actors = [];
 };
 
-EventBus.prototype.subscribe = function(callback){
-    this.callbacks.push(callback)
+EventBus.prototype.subscribe = function(actor){
+    this.actors.push(actor)
 }
 
-EventBus.prototype.publish = function(event){
-    this.callbacks.forEach(function(calback){
-        calback(event)
+EventBus.prototype.publish = function(message){
+    this.actors.forEach(function(actor){
+        actor.tell(message)
     })
 }
 
