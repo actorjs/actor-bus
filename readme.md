@@ -1,9 +1,7 @@
 ActorJs Bus
 ===========
 
-See Actor Model in Wikipedia.
-
-See ActorJs Core
+See [ActorJs Core](https://github.com/actorjs/actor-core)
 
 Description
 -----------
