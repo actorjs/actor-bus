@@ -1,4 +1,5 @@
 var assert = require('assert');
+
 describe('EventBus', function() {
 
     var EventBus = require("../src/EventBus");
